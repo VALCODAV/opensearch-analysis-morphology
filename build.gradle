@@ -6,23 +6,12 @@ apply plugin: 'opensearch.opensearchplugin'
 apply plugin: 'opensearch.yaml-rest-test'
 apply plugin: 'opensearch.pluginzip'
 
-def pluginName = 'rename'
-def pluginDescription = 'Custom plugin'
-def projectPath = 'org.opensearch'
-def pathToPlugin = 'path.to.plugin'
-def pluginClassName = 'RenamePlugin'
-group = "RenameGroup"
-
-
-tasks.register("preparePluginPathDirs") {
-    mustRunAfter clean
-    doLast {
-        def newPath = pathToPlugin.replace(".", "/")
-        mkdir "src/main/java/org/opensearch/$newPath"
-        mkdir "src/test/java/org/opensearch/$newPath"
-        mkdir "src/yamlRestTest/java/org/opensearch/$newPath"
-    }
-}
+def pluginName = 'analysis-morphology'
+def pluginDescription = 'Russian and English Morphology Analysis for OpenSearch'
+def projectPath = 'ru.itcsolutions'
+def pathToPlugin = 'plugin.analysis.morphology'
+def pluginClassName = 'AnalysisMorphologyPlugin'
+group = "ru.itcsolutions"
 
 publishing {
     publications {
@@ -63,7 +52,7 @@ validateNebulaPom.enabled = false
 
 buildscript {
     ext {
-        opensearch_version = System.getProperty("opensearch.version", "3.0.0-SNAPSHOT")
+        opensearch_version = System.getProperty("opensearch.version", "2.4.0")
     }
 
     repositories {
@@ -76,6 +65,12 @@ buildscript {
     dependencies {
         classpath "org.opensearch.gradle:build-tools:${opensearch_version}"
     }
+}
+
+dependencies {
+    implementation files('./libs/english-1.5.jar')
+    implementation files('./libs/morph-1.5.jar')
+    implementation files('./libs/russian-1.5.jar')
 }
 
 repositories {

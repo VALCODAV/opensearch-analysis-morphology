@@ -5,7 +5,7 @@
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
-package org.opensearch.path.to.plugin;
+package ru.itcsolutions.plugin.analysis.morphology;
 
 import com.carrotsearch.randomizedtesting.annotations.ThreadLeakScope;
 import org.apache.http.util.EntityUtils;
@@ -22,11 +22,11 @@ import static org.hamcrest.Matchers.containsString;
 
 @ThreadLeakScope(ThreadLeakScope.Scope.NONE)
 @OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.SUITE)
-public class RenamePluginIT extends OpenSearchIntegTestCase {
+public class AnalysisMorphologyPluginIT extends OpenSearchIntegTestCase {
 
     @Override
     protected Collection<Class<? extends Plugin>> nodePlugins() {
-        return Collections.singletonList(RenamePlugin.class);
+        return Collections.singletonList(AnalysisMorphologyPlugin.class);
     }
 
     public void testPluginInstalled() throws IOException {
@@ -34,6 +34,6 @@ public class RenamePluginIT extends OpenSearchIntegTestCase {
         String body = EntityUtils.toString(response.getEntity());
 
         logger.info("response body: {}", body);
-        assertThat(body, containsString("rename"));
+        assertThat(body, containsString("analysis-morphology"));
     }
 }
